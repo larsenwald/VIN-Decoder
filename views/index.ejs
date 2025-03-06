@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIN Decoder</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-block">
+                <div class="logo">
+                    <span>VIN</span>
+                </div>
+                <h1>DECODER</h1>
+            </div>
+            <div class="shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+            </div>
+        </header>
+
+        <main>
+            <div class="decoder-panel">
+                <div class="decoder-form">
+                    <h2>Enter Vehicle Identification Number</h2>
+                    <form action="/decode" method="post">
+                        <div class="input-group">
+                            <input type="text" id="vin" name="vin" placeholder="e.g., 1HGCM82633A004352" required maxlength="17" minlength="17">
+                            <button type="submit" class="btn-decode">DECODE</button>
+                        </div>
+                        <p class="hint">Enter a valid 17-character VIN</p>
+                    </form>
+                </div>
+
+                <div class="result-panel <%= typeof Make !== 'undefined' && Make ? 'active' : '' %>">
+                    <div class="result-header">
+                        <h2>VEHICLE DETAILS</h2>
+                        <div class="accent-line"></div>
+                    </div>
+
+                    <% if (typeof Make !== 'undefined' && Make) { %>
+                        <div class="result-grid">
+                            <div class="result-image">
+                                <% if (ImageUrl) { %>
+                                    <img src="<%= ImageUrl %>" alt="<%= Year %> <%= Make %> <%= Model %>">
+                                <% } else { %>
+                                    <div class="no-image">
+                                        <span>No image available</span>
+                                    </div>
+                                <% } %>
+                            </div>
+                            <div class="result-details">
+                                <div class="detail-item">
+                                    <span class="label">YEAR</span>
+                                    <span class="value"><%= Year || 'N/A' %></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">MAKE</span>
+                                    <span class="value"><%= Make || 'N/A' %></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">MODEL</span>
+                                    <span class="value"><%= Model || 'N/A' %></span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">TRIM</span>
+                                    <span class="value"><%= Trim || 'N/A' %></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="expandable-section">
+                            <button class="btn-expand" id="expandSpecs">
+                                <span class="expand-text">SHOW MORE SPECS</span>
+                                <span class="expand-icon">+</span>
+                            </button>
+                            
+                            <div class="expanded-content" id="specsContent">
+                                <div class="specs-grid">
+                                    <div class="spec-item">
+                                        <span class="label">VEHICLE TYPE</span>
+                                        <span class="value"><%= VehicleType || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">BODY CLASS</span>
+                                        <span class="value"><%= BodyClass || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">DRIVE TYPE</span>
+                                        <span class="value"><%= DriveType || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">DOORS</span>
+                                        <span class="value"><%= Doors || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">ENGINE CYLINDERS</span>
+                                        <span class="value"><%= Cylinders || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">ENGINE SIZE</span>
+                                        <span class="value"><%= EngineSize ? EngineSize + 'L' : 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">FUEL TYPE</span>
+                                        <span class="value"><%= FuelType || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">TRANSMISSION</span>
+                                        <span class="value"><%= Transmission || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">MANUFACTURER</span>
+                                        <span class="value"><%= Manufacturer || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">PLANT COUNTRY</span>
+                                        <span class="value"><%= PlantCountry || 'N/A' %></span>
+                                    </div>
+                                    <div class="spec-item">
+                                        <span class="label">GVWR CLASS</span>
+                                        <span class="value"><%= GVWR || 'N/A' %></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% } else if (typeof Make !== 'undefined') { %>
+                        <div class="error-message">
+                            <div class="error-icon">!</div>
+                            <p>Sorry, we couldn't decode this VIN. Please check and try again.</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>made with <span class="heart">♥</span> by Larsenwald</p>
+        </footer>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>
